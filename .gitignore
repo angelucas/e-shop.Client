@@ -133,3 +133,4 @@ obj/e-shop.Client.csproj.nuget.dgspec.json
 obj/e-shop.Client.csproj.nuget.g.props
 obj/project.assets.json
 obj/project.nuget.cache
+bin/Debug/net5.0/e-shop.Client.dll
