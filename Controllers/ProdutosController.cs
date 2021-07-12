@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace e_shop.Client.Controllers
@@ -17,7 +18,7 @@ namespace e_shop.Client.Controllers
     {
         ProdutosAPI _api = new();
 
-        public async Task<IActionResult> Atualiza()
+        public async Task<IActionResult> Update()
         {
             List<Produto> produtos = new List<Produto>();
             HttpClient client = _api.initial();
@@ -36,7 +37,32 @@ namespace e_shop.Client.Controllers
             return View(produtos);
         }
 
-        public async Task<IActionResult> Cria()
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Produto produto)
+        {
+            HttpClient client = _api.initial();
+
+            // HTTP POST
+            var postTask = client.PostAsJsonAsync<Produto>("api/produtos", produto);
+            postTask.Wait();
+
+            var res = postTask.Result;
+            if (res.IsSuccessStatusCode)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return Error();
+            }
+        }
+
+        public async Task<IActionResult> Delete()
         {
             List<Produto> produtos = new List<Produto>();
             HttpClient client = _api.initial();
@@ -55,7 +81,7 @@ namespace e_shop.Client.Controllers
             return View(produtos);
         }
 
-        public async Task<IActionResult> Deleta()
+        public async Task<IActionResult> List()
         {
             List<Produto> produtos = new List<Produto>();
             HttpClient client = _api.initial();
@@ -74,42 +100,23 @@ namespace e_shop.Client.Controllers
             return View(produtos);
         }
 
-        public async Task<IActionResult> Lista()
+        public async Task<IActionResult> Details(int Id)
         {
-            List<Produto> produtos = new List<Produto>();
+            var produto = new Produto();
             HttpClient client = _api.initial();
-            HttpResponseMessage res = await client.GetAsync("api/produtos");
+            HttpResponseMessage res = await client.GetAsync($"api/produtos/{Id}");
 
             if (res.IsSuccessStatusCode)
             {
-                var resultados = res.Content.ReadAsStringAsync().Result;
-                produtos = JsonConvert.DeserializeObject<List<Produto>>(resultados);
+                var resultado = res.Content.ReadAsStringAsync().Result;
+                produto = JsonConvert.DeserializeObject<Produto>(resultado);
             }
             else
             {
                 return Error();
             }
 
-            return View(produtos);
-        }
-
-        public async Task<IActionResult> Detalhes()
-        {
-            List<Produto> produtos = new List<Produto>();
-            HttpClient client = _api.initial();
-            HttpResponseMessage res = await client.GetAsync("api/produtos");
-
-            if (res.IsSuccessStatusCode)
-            {
-                var resultados = res.Content.ReadAsStringAsync().Result;
-                produtos = JsonConvert.DeserializeObject<List<Produto>>(resultados);
-            }
-            else
-            {
-                return Error();
-            }
-
-            return View(produtos);
+            return View(produto);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

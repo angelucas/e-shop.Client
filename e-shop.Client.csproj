@@ -9,7 +9,6 @@
   <ItemGroup>
     <Content Remove="Views\Home\Dashboard.cshtml" />
     <Content Remove="Views\Home\Privacy.cshtml" />
-    <Content Remove="Views\Produtos\Create.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
