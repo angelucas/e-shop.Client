@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - e_shop.Client</title>
+    <title>@ViewData["Title"] - MugStore</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -21,9 +21,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-success" asp-area="" asp-controller="Produtos" asp-action="Lista">Lista</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-primary" asp-area="" asp-controller="Produtos" asp-action="Cria">Cria</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary" asp-area="" asp-controller="Produtos" asp-action="Atualiza">Atualiza</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-warning" asp-area="" asp-controller="Produtos" asp-action="Lista">Deleta</a>
+                            </li>
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
