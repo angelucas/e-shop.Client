@@ -7,11 +7,17 @@ namespace e_shop.Client.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Display(Name = "ID")]
         public int ProdutoId { get; set; }
+        [Display(Name = "Nome")]
         public string Nome { get; set; }
+        [Display(Name = "Tamanho")]
         public string Tamanho { get; set; }
+        [Display(Name = "Coleção")]
         public string Colecao { get; set; }
+        [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        [Display(Name = "Preço")]
         public decimal Preco { get; set; }
     }
 }

@@ -1,13 +1,9 @@
-﻿using e_shop.Client.Helper;
-using e_shop.Client.Models;
+﻿using e_shop.Client.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+using NToastNotify;
 using System.Diagnostics;
-using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace e_shop.Client.Controllers
 {
@@ -15,14 +11,21 @@ namespace e_shop.Client.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IToastNotification toastNotification;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IToastNotification toastNotification)
         {
             _logger = logger;
+            this.toastNotification = toastNotification;
         }
         
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                toastNotification.AddInfoToastMessage("Seja Bem-Vindo!");
+            }
+            
             return View();
         }
 

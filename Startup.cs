@@ -32,7 +32,13 @@ namespace e_shop.Client
                     .RequireAuthenticatedUser()
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
-            });
+            })
+            .AddNToastNotifyNoty(new NToastNotify.NotyOptions() {
+                ProgressBar = true,
+                Timeout = 3200,
+                Theme = "mint"
+             });
+
             services.AddRazorPages()
                  .AddMicrosoftIdentityUI();
         }
@@ -50,14 +56,13 @@ namespace e_shop.Client
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseNToastNotify();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

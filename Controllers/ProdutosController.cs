@@ -3,10 +3,9 @@ using e_shop.Client.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System;
+using NToastNotify;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -16,8 +15,13 @@ namespace e_shop.Client.Controllers
     [Authorize]
     public class ProdutosController : Controller
     {
+        private readonly IToastNotification toastNotification;
         ProdutosAPI _api = new();
 
+        public ProdutosController(IToastNotification toastNotification) 
+        {
+            this.toastNotification = toastNotification;
+        }
         public async Task<IActionResult> Update()
         {
             List<Produto> produtos = new List<Produto>();
@@ -54,6 +58,7 @@ namespace e_shop.Client.Controllers
             var res = postTask.Result;
             if (res.IsSuccessStatusCode)
             {
+                toastNotification.AddSuccessToastMessage("Item adicionado com sucesso!");
                 return RedirectToAction("List");
             }
             else

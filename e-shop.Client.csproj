@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="bundleconfig.json" />
     <Content Remove="Views\Home\Dashboard.cshtml" />
     <Content Remove="Views\Home\Privacy.cshtml" />
   </ItemGroup>
@@ -17,6 +18,7 @@
     <PackageReference Include="Microsoft.Identity.Web" Version="1.14.0" />
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.14.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="NToastNotify" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
