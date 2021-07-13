@@ -22,23 +22,48 @@ namespace e_shop.Client.Controllers
         {
             this.toastNotification = toastNotification;
         }
-        public async Task<IActionResult> Update()
-        {
-            List<Produto> produtos = new List<Produto>();
-            HttpClient client = _api.initial();
-            HttpResponseMessage res = await client.GetAsync("api/produtos");
 
+        // UPDATE
+        public IActionResult Update(Produto produto)
+        {
+            HttpClient client = _api.initial();
+
+            // http put
+            var putTask = client.PutAsJsonAsync<Produto>($"api/produtos/{produto.ProdutoId}", produto);
+            putTask.Wait();
+
+            var res = putTask.Result;
             if (res.IsSuccessStatusCode)
             {
-                var resultados = res.Content.ReadAsStringAsync().Result;
-                produtos = JsonConvert.DeserializeObject<List<Produto>>(resultados);
+                toastNotification.AddSuccessToastMessage("Item atualizado!");
+                return RedirectToAction("List");
             }
             else
             {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao criar.");
                 return Error();
             }
+        }
 
-            return View(produtos);
+        // UPDATE
+        [HttpGet]
+        public async Task<IActionResult> Update(int Id)
+        {
+            var produto = new Produto();
+            HttpClient client = _api.initial();
+            HttpResponseMessage res = await client.GetAsync($"api/produtos/{Id}");
+
+            if (res.IsSuccessStatusCode)
+            {
+                var resultado = res.Content.ReadAsStringAsync().Result;
+                produto = JsonConvert.DeserializeObject<Produto>(resultado);
+                return View(produto);
+            }
+            else
+            {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao atualizar.");
+                return Error();
+            }
         }
 
         public IActionResult Create()
@@ -46,12 +71,13 @@ namespace e_shop.Client.Controllers
             return View();
         }
 
+        // CREATE
         [HttpPost]
         public IActionResult Create(Produto produto)
         {
             HttpClient client = _api.initial();
 
-            // HTTP POST
+            // http post
             var postTask = client.PostAsJsonAsync<Produto>("api/produtos", produto);
             postTask.Wait();
 
@@ -63,29 +89,32 @@ namespace e_shop.Client.Controllers
             }
             else
             {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao criar.");
                 return Error();
             }
         }
 
-        public async Task<IActionResult> Delete()
+        // DELETE
+        public async Task<IActionResult> Delete(int Id)
         {
-            List<Produto> produtos = new List<Produto>();
+            var produto = new Produto();
             HttpClient client = _api.initial();
-            HttpResponseMessage res = await client.GetAsync("api/produtos");
+            HttpResponseMessage res = await client.DeleteAsync($"api/produtos/{Id}");
 
             if (res.IsSuccessStatusCode)
             {
-                var resultados = res.Content.ReadAsStringAsync().Result;
-                produtos = JsonConvert.DeserializeObject<List<Produto>>(resultados);
+                toastNotification.AddWarningToastMessage("Item deletado!");
+                return RedirectToAction("List");
             }
             else
             {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao deletar.");
                 return Error();
             }
-
-            return View(produtos);
         }
 
+        // LIST
+        [HttpGet]
         public async Task<IActionResult> List()
         {
             List<Produto> produtos = new List<Produto>();
@@ -96,15 +125,18 @@ namespace e_shop.Client.Controllers
             {
                 var resultados = res.Content.ReadAsStringAsync().Result;
                 produtos = JsonConvert.DeserializeObject<List<Produto>>(resultados);
+
+                return View(produtos);
             }
             else
             {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao listar.");
                 return Error();
             }
-
-            return View(produtos);
         }
 
+        // DETAILS
+        [HttpGet]
         public async Task<IActionResult> Details(int Id)
         {
             var produto = new Produto();
@@ -115,15 +147,17 @@ namespace e_shop.Client.Controllers
             {
                 var resultado = res.Content.ReadAsStringAsync().Result;
                 produto = JsonConvert.DeserializeObject<Produto>(resultado);
+
+                return View(produto);
             }
             else
             {
+                toastNotification.AddErrorToastMessage("Ops! Erro ao mostrar.");
                 return Error();
             }
-
-            return View(produto);
         }
 
+        // ERROR
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

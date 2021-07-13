@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\lib\toastr.js\**" />
+    <Content Remove="wwwroot\lib\toastr.js\**" />
+    <EmbeddedResource Remove="wwwroot\lib\toastr.js\**" />
+    <None Remove="wwwroot\lib\toastr.js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="bundleconfig.json" />
+    <Content Remove="libman.json" />
     <Content Remove="Views\Home\Dashboard.cshtml" />
     <Content Remove="Views\Home\Privacy.cshtml" />
   </ItemGroup>

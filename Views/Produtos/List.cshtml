@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Preco)
             </td>
             <td>
-                @Html.ActionLink("Editar", "Editar", new { id = item.ProdutoId }) |
-                @Html.ActionLink("Detalhes", "Detalhes", new { id = item.ProdutoId }) |
-                @Html.ActionLink("Deletar", "Deletar", new { id = item.ProdutoId })
+                @Html.ActionLink("Editar", "Update", new { id = item.ProdutoId }) |
+                @Html.ActionLink("Detalhes", "Details", new { id = item.ProdutoId }) |
+                @Html.ActionLink("Deletar", "Delete", new { id = item.ProdutoId })
             </td>
         </tr>
 }

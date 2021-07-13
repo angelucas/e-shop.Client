@@ -1,54 +1,54 @@
 ﻿@model e_shop.Client.Models.Produto
 
 @{
-    ViewData["Title"] = "Atualiza";
+    ViewData["Title"] = "Atualizar";
 }
 
 <h2>Atualiza produto</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Atualiza">
+        <form asp-action="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div class="form-group" style="display:none">
                 <label asp-for="ProdutoId" class="control-label"></label>
                 <input asp-for="ProdutoId" class="form-control" />
                 <span asp-validation-for="ProdutoId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
+                <input asp-for="Nome" class="form-control" value="@Model.Nome" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Tamanho" class="control-label"></label>
-                <input asp-for="Tamanho" class="form-control" />
+                <input asp-for="Tamanho" class="form-control" value="@Model.Tamanho" />
                 <span asp-validation-for="Tamanho" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Colecao" class="control-label"></label>
-                <input asp-for="Colecao" class="form-control" />
+                <input asp-for="Colecao" class="form-control" value="@Model.Colecao" />
                 <span asp-validation-for="Colecao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Descricao" class="control-label"></label>
-                <input asp-for="Descricao" class="form-control" />
+                <input asp-for="Descricao" class="form-control" value="@Model.Descricao" />
                 <span asp-validation-for="Descricao" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Preco" class="control-label"></label>
-                <input asp-for="Preco" class="form-control" />
+                <input asp-for="Preco" class="form-control" value="@Model.Preco" />
                 <span asp-validation-for="Preco" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="List">Voltar</a>
 </div>
 
 @section Scripts {
