@@ -17,7 +17,10 @@ namespace e_shop.Client.Models
         public string Colecao { get; set; }
         [Display(Name = "Descrição")]
         public string Descricao { get; set; }
+        [Column(TypeName = "decimal(18, 2)")]
         [Display(Name = "Preço")]
         public decimal Preco { get; set; }
+        [Display(Name = "Imagem")]
+        public string ImagemUrl { get; set; }
     }
 }
